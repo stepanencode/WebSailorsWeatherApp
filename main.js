@@ -1,6 +1,5 @@
 const OPENWEATHER_API_KEY = '21cd7ffaf13d91a005d5854834f990b0';
 const OPENWEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/forecast';
-const WEATHER_TABLE_CLASS = 'table';
 const WEATHER_TABLE_ROWS = ['Date', 'Temperature ℃', 'Weather condition', ' '];
 
 function httpGet(url) {
@@ -34,11 +33,23 @@ function parseWeatherData (data) {
 }
 
 function generateTable(data) {
-    let table = document.createElement("table");
-    table.classList.add(WEATHER_TABLE_CLASS);
+    let container = document.createElement("div");
+    container.classList.add("container");
 
-    let previousTable = document.querySelector(WEATHER_TABLE_CLASS);
-    previousTable.parentNode.replaceChild(table, previousTable);
+    let tableResponsive = document.createElement("div");
+    container.classList.add("table-responsive");
+    container.appendChild(tableResponsive);
+
+    let table = document.createElement("table");
+    table.classList.add('table');
+    tableResponsive.appendChild(table);
+
+    let previousContainer = document.querySelector('container');
+    if (previousContainer !== null) {
+        previousContainer.parentNode.replaceChild(container, previousContainer);
+    } else {
+        document.body.appendChild(container);
+    }
 
     let tableHead = table.createTHead();
     let row = tableHead.insertRow();
